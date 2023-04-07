@@ -18,12 +18,13 @@ const CreatePostWizard = () => {
 
   const [input, setInput] = useState("");
 
-  const ctx = api.useContext();
+  const ctx = api.useContext(); // Get the context of trpc cache to invalidate the query
 
   const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
     onSuccess: () => {
+      // Clear input on success (when the mutation is successful)
       setInput("");
-      void ctx.posts.getAll.invalidate();
+      void ctx.posts.getAll.invalidate(); //update the content by invalidating the query: This forces React Query to fetch fresh data from the API the next time the query is executed.
     },
   });
 
