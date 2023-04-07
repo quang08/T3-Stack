@@ -14,7 +14,7 @@ const ProfileFeed = (props: { userId: string }) => {
   return (
     <div className="flex flex-col">
       {data.map((fullPost) => (
-        <PostView {...fullPost} key={fullPost.post.id}/>
+        <PostView {...fullPost} key={fullPost.post.id} />
       ))}
     </div>
   );
@@ -30,7 +30,6 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
     <>
       <Head>
         <title>{data.username}</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageLayout>
         <div className="relative h-36 bg-slate-600">
@@ -78,7 +77,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   //a trpc helper that will help us fetch the data ahead of time and then hydrate it through serverside props
   //basically trying to prevent the loading state being hit bc it's generated ahead of time
-  await ssg.profile.getUserByUsername.prefetch({ username: slug });
+  await ssg.profile.getUserByUsername.prefetch({ username });
 
   return {
     props: {
