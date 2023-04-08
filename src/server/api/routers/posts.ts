@@ -39,7 +39,7 @@ const addUserDataToPost = async (posts: Post[]) => {
       },
     };
   });
-}
+};
 
 // Create a new ratelimiter, that allows 3 requests per 1 minute
 const ratelimit = new Ratelimit({
@@ -50,6 +50,25 @@ const ratelimit = new Ratelimit({
 });
 
 export const postsRouter = createTRPCRouter({
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const post = await ctx.prisma.post.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!post) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Post not found",
+        });
+      }
+
+      return (await addUserDataToPost([post]))[0]; // addUserDataToPost returns an array, so we need to get the first element (the only element
+    }),
+
   getAll: publicProcedure.query(async ({ ctx }) => {
     const posts = await ctx.prisma.post.findMany({
       take: 100,
@@ -65,16 +84,17 @@ export const postsRouter = createTRPCRouter({
         userId: z.string(),
       })
     )
-    .query(({ ctx, input }) =>
-      ctx.prisma.post
-        .findMany({
-          where: {
-            authorId: input.userId, // match the schema's author to the input's userId field
-          },
-          take: 100,
-          orderBy: [{ createdAt: "desc" }],
-        })
-        .then(addUserDataToPost) // add the user data to the post bc the post returned from the db doesn't have the author ID
+    .query(
+      ({ ctx, input }) =>
+        ctx.prisma.post
+          .findMany({
+            where: {
+              authorId: input.userId, // match the schema's author to the input's userId field
+            },
+            take: 100,
+            orderBy: [{ createdAt: "desc" }],
+          })
+          .then(addUserDataToPost) // add the user data to the post bc the post returned from the db doesn't have the author ID
     ),
 
   create: privateProcedure
