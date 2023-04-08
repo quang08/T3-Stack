@@ -5,6 +5,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [Next.js](https://nextjs.org)
 - [Clerk](https://clerk.com/)
 - [Prisma](https://prisma.io)
+- [PlanetScale](https://planetscale.com/)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 - [upstash](https://upstash.com/)
