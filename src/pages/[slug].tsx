@@ -70,13 +70,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const username = slug.replace("@", "");
 
-  //a trpc helper that will help us fetch the data ahead of time and then hydrate it through serverside props
+  //a trpc helper that will help us fetch the data ahead of time from trpc route and then hydrate it through serverside props
   //basically trying to prevent the loading state being hit bc it's generated ahead of time
   await ssg.profile.getUserByUsername.prefetch({ username });
 
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      trpcState: ssg.dehydrate(), //dyhydrate the data back to the dom/client
       username, //give the username to the component
     },
   };

@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      trpcState: ssg.dehydrate(), //dyhydrate the data back to the dom/client
       id, //give the id to the component
     },
   };
