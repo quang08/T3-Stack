@@ -3,7 +3,7 @@
 Full-stack app built with [T3 Stack](https://create.t3.gg/)
 
 - **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [MySQL](https://www.mysql.com/)
+- **Database**: [PlanetScale](https://planetscale.com/)
 - **Type-safety**: [tRPC](https://trpc.io/)
 - **ORM**: [Prisma](https://prisma.io/)
 - **Authentication**: [Clerk](https://clerk.com/)
